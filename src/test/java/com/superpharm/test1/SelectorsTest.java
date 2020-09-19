@@ -31,11 +31,25 @@ public class SelectorsTest {
         String passWord = "J20i12s13";
 
         UserProfileMethods.logIn(wd, userName, passWord);
-
         CommonMethods.delay(2000);
 
-        UserProfileMethods.logOut(wd);
+        UserProfileMethods.openCartPopup(wd);
 
+        String itemName = "nivea";
+        int itemPosition = CommonMethods.searchItemPosition(wd, itemName);
+        CommonMethods.addItemToCart(wd, Integer.toString(itemPosition));
+
+        itemName = "dove";
+        itemPosition = CommonMethods.searchItemPosition(wd, itemName);
+        CommonMethods.addItemToCart(wd, Integer.toString(itemPosition));
+
+        itemPosition = CommonMethods.searchItemPosition(wd, itemName);
+        CommonMethods.addItemToCart(wd, Integer.toString(itemPosition));
+
+        UserProfileMethods.openCartPopup(wd);
+        UserProfileMethods.openCart(wd);
+
+        UserProfileMethods.logOut(wd);
         CommonMethods.delay(2000);
 
     }

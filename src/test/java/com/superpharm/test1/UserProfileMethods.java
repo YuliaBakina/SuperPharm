@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class UserProfileMethods {
 
@@ -41,6 +42,27 @@ public class UserProfileMethods {
 
         System.out.println("User " + userOnSite + " was logged out!");
         System.out.println();
+
+    }
+
+    public static void openCartPopup(WebDriver wd){
+
+        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wd.findElement(By.cssSelector("[id=\"cart-group\"]")).click();
+        CommonMethods.delay(2000);
+
+    }
+
+    public static void openCart(WebDriver wd){
+
+        wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        wd.findElement(By.cssSelector("[href=\"/cart\"]")).click();
+        wd.findElement(By.cssSelector("[class=\"dy-lb-close\"]")).click();
+
+        String totalSum = wd.findElement(By.cssSelector("[class=\"total-price-wrap\"] div[class=\"item-price\"]")).getText();
+
+        System.out.println("The cart was opened. The total price for all added items = " + totalSum + " NIS");
+        CommonMethods.delay(2000);
 
     }
 
