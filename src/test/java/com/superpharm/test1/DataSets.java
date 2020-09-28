@@ -2,11 +2,9 @@ package com.superpharm.test1;
 
 public class DataSets {
 
-/*
-    User details for login workflow
+    /*User details for login workflow
      available dataType: "email", "password"
-     available testType: "Positive", "Negative"
-*/
+     available testType: "Positive", "Negative"*/
     public static String userDetails(String testType, String dataType){
 
         if(testType == "Positive"){

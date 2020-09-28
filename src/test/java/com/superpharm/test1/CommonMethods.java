@@ -36,9 +36,13 @@ public class CommonMethods {
         wd.findElement(By.id("search-field")).sendKeys(itemName);
 
         wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        wd.findElement(By.cssSelector("[href=\"/search/?av=" + itemName + "\"]")).click();
 
-        String itemsNumFound = wd.findElement(By.cssSelector("[id=\"resultsCounter\"]")).getText();
+        //wd.findElement(By.cssSelector("[href='/search/?av=" + itemName + "']")).click();
+        wd.findElement(By.xpath("//a[@class='more-results-btn']")).click();
+
+        //String itemsNumFound = wd.findElement(By.cssSelector("[id='resultsCounter']")).getText();
+        String itemsNumFound = wd.findElement(By.xpath("//span[@id='resultsCounter']")).getText();
+
         System.out.println("Search of " + itemName.toUpperCase() + " is completed. There are: " + itemsNumFound + " items");
 
         int min = 1;
@@ -54,19 +58,23 @@ public class CommonMethods {
     /*Add chosen item to cart method*/
     public static void addItemToCart(WebDriver wd, String itemPosition){
 
-        wd.findElement(By.cssSelector("[class=\"col-xs-8 add-to-basket\"][data-position=\"" + itemPosition + "\"]")).click();
+    //    wd.findElement(By.cssSelector("[class='col-xs-8 add-to-basket'][data-position='" + itemPosition + "']")).click();
+        wd.findElement(By.xpath("//div[@data-position='" + itemPosition + "']//div[@class='icon']")).click();
+
         System.out.println("Item was added to cart");
 
     }
 
     /*Empty cart method.
-    * Items are sequentially removed from the basket using the only one css selector*/
+    * Items are sequentially removed from the basket using the only one locator*/
     public static void emptyCart(WebDriver wd){
 
-        int totalAmount = Integer.parseInt(wd.findElement(By.cssSelector("[class=\"total-price-wrap\"] span[class=\"total-count-wrap\"] span[class=\"total-count\"]")).getText());
+        int totalAmount = Integer.parseInt(wd.findElement(By.xpath("//div[@class='bottom-left']//span[@class='total-count']")).getText());
+
         for(int i = 1; i <= totalAmount; i++){
             CommonMethods.delay(1000);
-            wd.findElement(By.cssSelector("ul[class=\"cart-items\"] div[class=\"cart-item\"] button[class=\"delete-item\"]")).click();
+            //wd.findElement(By.cssSelector("ul[class='cart-items'] div[class='cart-item'] button[class='delete-item']")).click();
+            wd.findElement(By.xpath("//ul[@class='cart-items']//button[1]")).click();
         }
         System.out.println("The cart is empty, " + totalAmount + " items were deleted");
         CommonMethods.delay(2000);

@@ -11,15 +11,20 @@ public class UserProfileMethods {
     /*Login method*/
     public static void logIn(WebDriver wd, String userName, String passWord){
 
-        wd.findElement(By.cssSelector("#loginAnchor")).click();
+        //wd.findElement(By.cssSelector("#loginAnchor")).click();
+        wd.findElement(By.xpath("//a[@id='loginAnchor']")).click();
+
         fillData(wd, "#j_username", userName);
         fillData(wd, "#j_password", passWord);
 
         CommonMethods.delay(1000);
 
-        wd.findElement(By.cssSelector("form[id=\"loginForm\"] div button[type=\"submit\"]")).click();
+       // wd.findElement(By.cssSelector("form[id='loginForm'] div button[type='submit']")).click();
+        wd.findElement(By.xpath("//form[@id='loginForm']//button[@type='submit']")).click();
 
-        String userOnSite = wd.findElement(By.cssSelector("#user-name")).getText();
+        //String userOnSite = wd.findElement(By.cssSelector("#user-name")).getText();
+        String userOnSite = wd.findElement(By.xpath("//div[@id='user-name']")).getText();
+
         System.out.println("User " + userOnSite + " was logged in!");
 
     }
@@ -40,17 +45,19 @@ public class UserProfileMethods {
 
         wd.findElement(By.id("profile-img-group")).click();
         CommonMethods.delay(500);
-       // wd.findElement(By.cssSelector("[href=\"/logout\"]")).click(); //this does not work sometimes
-        wd.findElement(By.cssSelector("[href=\"/logout\"]")).sendKeys(Keys.ENTER);
+       // wd.findElement(By.cssSelector("[href='/logout']")).sendKeys(Keys.ENTER);
+        wd.findElement(By.xpath("//a[@href='/logout']")).click();
+
         System.out.println("User " + userOnSite + " was logged out!");
 
     }
 
-    /*Open cart popup window method*/
+
+     /*Open cart popup window method*/
     public static void openCartPopup(WebDriver wd){
 
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wd.findElement(By.cssSelector("[id=\"cart-group\"]")).click();
+        wd.findElement(By.cssSelector("[id='cart-group']")).click();
 
     }
 
@@ -59,11 +66,14 @@ public class UserProfileMethods {
         openCartPopup(wd);
 
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        wd.findElement(By.cssSelector("[href=\"/cart\"]")).click();
-        wd.findElement(By.cssSelector("[class=\"dy-lb-close\"]")).click();
+        wd.findElement(By.cssSelector("[href='/cart']")).click();
+        wd.findElement(By.cssSelector("[class='dy-lb-close']")).click();
 
-        String totalSum = wd.findElement(By.cssSelector("[class=\"total-price-wrap\"] div[class=\"item-price\"]")).getText();
-        String totalAmount = wd.findElement(By.cssSelector("[class=\"total-price-wrap\"] span[class=\"total-count-wrap\"] span[class=\"total-count\"]")).getText();
+        //String totalSum = wd.findElement(By.cssSelector("[class='total-price-wrap'] div[class='item-price']")).getText();
+        String totalSum = wd.findElement(By.xpath("//div[@class='total-price-wrap']//div[@class='item-price']")).getText();
+
+        //String totalAmount = wd.findElement(By.cssSelector("[class='total-price-wrap'] span[class='total-count-wrap'] span[class='total-count']")).getText();
+        String totalAmount = wd.findElement(By.xpath("//div[@class='bottom-left']//span[@class='total-count']")).getText();
 
         System.out.println("The cart was opened. There are " + totalAmount + " item(s) in the cart");
         System.out.println("The total price for all added items = " + totalSum + " NIS");

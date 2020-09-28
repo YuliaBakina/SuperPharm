@@ -1,6 +1,8 @@
 package com.superpharm.test1;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,7 +19,6 @@ public class SelectorsTest {
         wd.manage().window().maximize();
         wd.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-        wd.navigate().to("https://shop.super-pharm.co.il/");
         wd.manage().deleteAllCookies();
 
         CommonMethods.delay(2000);
@@ -25,6 +26,12 @@ public class SelectorsTest {
 
     @Test
     public void superpharmOnline(){
+
+        wd.navigate().to("https://shop.super-pharm.co.il/");
+        CommonMethods.delay(10000);
+
+        wd.findElement(By.xpath("//ul[@id='header-top-nav']//a[@href='/termsAndConditions']")).click();
+    //    wd.findElement(By.cssSelector("div[id='navbar'] a[href='/termsAndConditions']")).click();
 
     /*User login*/
         String userName = DataSets.userDetails("Positive","email");
